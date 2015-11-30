@@ -1,0 +1,2 @@
+1. Install CPLEX from: http://www-01.ibm.com/software/commerce/optimization/cplex-optimizer/
+2. Copy cplex.jar from CPLEX installation to this directory.
