@@ -162,8 +162,7 @@ public class ACMRES extends ACMRE {
 			
 			milp.solve();
 			if(milp.getStatus().equals(IloCplex.Status.Optimal)) {
-//				System.err.println(attackerTypesArray[l]);
-//				System.err.println("objective=" + milp.getObjValue());
+				
 			} else if(milp.getStatus().equals(IloCplex.Status.Feasible)) {
 				throw new IloException("solution is feasible, not optimal");
 			} else if(milp.getStatus().equals(IloCplex.Status.Infeasible)) {
@@ -173,10 +172,6 @@ public class ACMRES extends ACMRE {
 			}
 			
 			qvals = milp.getValues(q);
-//			for(int j = 0; j < Q; j++) {
-//				System.err.println("p(" + attackerPureStrategiesArray[j] + ")=" + qvals[j]);
-//			}
-//			System.err.println();
 		} catch (IloException e) {
 			e.printStackTrace();
 		} finally {
@@ -186,185 +181,6 @@ public class ACMRES extends ACMRE {
 		}
 		return qvals;
 	}
-	
-//	public double[] defender(double sigma, double[][] q) {
-//		double[] xvals = new double[X];
-//		IloCplex milp = null;
-//		try {
-//			milp = new IloCplex();
-//			milp.setOut(null); // disable console output
-//			
-//			IloNumVar[] x = milp.boolVarArray(X); // (6)
-//			milp.addEq(milp.sum(x, 0, X), 1); // (5)
-//			
-//			IloNumVar V1 = milp.numVar(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
-//			milp.addEq(V1, this.minimin()); // (4)
-//			
-//			IloNumVar B1 = milp.numVar(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
-//			milp.addEq(B1, this.maximin()); // (3)
-//			
-//			for(int j = 0; j < Q; j++) {
-//				IloNumExpr left = null;
-//				for(int l = 0; l < L; l++) {
-//					for(int i = 0; i < X; i++) {
-//						IloNumExpr prod = milp.prod(p[l] * R[l][i][j], x[i]);
-//						if(left == null) {
-//							left = prod;
-//						} else {
-//							left = milp.sum(left, prod);
-//						}
-//					}
-//				}
-//				milp.addGe(left, milp.sum(milp.prod((1 - sigma), B1), milp.prod(sigma, V1))); // (2)
-//			}
-//			
-//			IloNumExpr obj = null;
-//			for(int j = 0; j < Q; j++) {
-//				for(int l = 0; l < L; l++) {
-//					for(int i = 0; i < X; i++) {
-//						IloNumExpr prod = milp.prod(p[l] * R[l][i][j] * q[l][j], x[i]);
-//						if(obj == null) {
-//							obj = prod;
-//						} else {
-//							obj = milp.sum(obj, prod);
-//						}
-//					}
-//				}
-//			}
-//			milp.addMaximize(obj); // (1)
-//			
-//			milp.solve();
-//			if(milp.getStatus().equals(IloCplex.Status.Optimal)) {
-//				System.err.println(milp.getObjValue());
-//			} else if(milp.getStatus().equals(IloCplex.Status.Feasible)) {
-//				throw new IloException("solution is feasible, not optimal");
-//			} else if(milp.getStatus().equals(IloCplex.Status.Infeasible)) {
-//				throw new IloException("solution is infeasible");
-//			} else {
-//				throw new IloException("solution error");
-//			}
-//			
-//			xvals = milp.getValues(x);
-//			for(int i = 0; i < X; i++) {
-//				System.err.println("p(" + attackerPureStrategiesArray[i] + ")=" + xvals[i]);
-//			}
-//		} catch (IloException e) {
-//			e.printStackTrace();
-//		} finally {
-//			if(milp != null) {
-//				milp.end();
-//			}
-//		}
-//		return xvals;
-//	}
-//	
-//	public double maximin() {
-//		double val = 0;
-//		IloCplex milp = null;
-//		try {
-//			milp = new IloCplex();
-//			milp.setOut(null); // disable console output
-//			
-//			IloNumVar[] y = milp.boolVarArray(X); // (8)
-//			milp.addEq(milp.sum(y, 0, X), 1); // (7)
-//			
-//			IloNumExpr obj = null;
-//			for(int l = 0; l < L; l++) {
-//				for(int i = 0; i < X; i++) {
-//					double min = Double.POSITIVE_INFINITY;
-//					for(int j = 0; j < Q; j++) {
-//						if(R[l][i][j] < min) {
-//							min = R[l][i][j];
-//						}
-//					}
-//					IloNumExpr prod = milp.prod(p[l] * min, y[i]);
-//					if(obj == null) {
-//						obj = prod;
-//					} else {
-//						obj = milp.sum(obj, prod);
-//					}
-//				}
-//			}
-//			milp.addMaximize(obj);
-//			
-//			milp.solve();
-//			if(milp.getStatus().equals(IloCplex.Status.Optimal)) {
-//				System.err.println(milp.getObjValue());
-//			} else if(milp.getStatus().equals(IloCplex.Status.Feasible)) {
-//				throw new IloException("solution is feasible, not optimal");
-//			} else if(milp.getStatus().equals(IloCplex.Status.Infeasible)) {
-//				throw new IloException("solution is infeasible");
-//			} else {
-//				throw new IloException("solution error");
-//			}
-//			
-//			val = milp.getObjValue();
-//			for(int i = 0; i < X; i++) {
-//				System.err.println("p(" + attackerPureStrategiesArray[i] + ")=" + milp.getValues(y)[i]);
-//			}
-//		} catch (IloException e) {
-//			e.printStackTrace();
-//		} finally {
-//			if(milp != null) {
-//				milp.end();
-//			}
-//		}
-//		return val;
-//	}
-//	
-//	public double minimin() {
-//		double val = 0;
-//		IloCplex milp = null;
-//		try {
-//			milp = new IloCplex();
-//			milp.setOut(null); // disable console output
-//			
-//			IloNumVar[] z = milp.boolVarArray(X); // (8)
-//			milp.addEq(milp.sum(z, 0, X), 1); // (7)
-//			
-//			IloNumExpr obj = null;
-//			for(int l = 0; l < L; l++) {
-//				for(int i = 0; i < X; i++) {
-//					double min = Double.POSITIVE_INFINITY;
-//					for(int j = 0; j < Q; j++) {
-//						if(R[l][i][j] < min) {
-//							min = R[l][i][j];
-//						}
-//					}
-//					IloNumExpr prod = milp.prod(p[l] * min, z[i]);
-//					if(obj == null) {
-//						obj = prod;
-//					} else {
-//						obj = milp.sum(obj, prod);
-//					}
-//				}
-//			}
-//			milp.addMinimize(obj);
-//			
-//			milp.solve();
-//			if(milp.getStatus().equals(IloCplex.Status.Optimal)) {
-//				System.err.println(milp.getObjValue());
-//			} else if(milp.getStatus().equals(IloCplex.Status.Feasible)) {
-//				throw new IloException("solution is feasible, not optimal");
-//			} else if(milp.getStatus().equals(IloCplex.Status.Infeasible)) {
-//				throw new IloException("solution is infeasible");
-//			} else {
-//				throw new IloException("solution error");
-//			}
-//			
-//			val = milp.getObjValue();
-//			for(int i = 0; i < X; i++) {
-//				System.err.println("p(" + attackerPureStrategiesArray[i] + ")=" + milp.getValues(z)[i]);
-//			}
-//		} catch (IloException e) {
-//			e.printStackTrace();
-//		} finally {
-//			if(milp != null) {
-//				milp.end();
-//			}
-//		}
-//		return val;
-//	}
 	
 	private double[] defender(double sigma, double[][] q) {
 		double[] xvals = new double[X];
@@ -443,8 +259,7 @@ public class ACMRES extends ACMRE {
 			
 			milp.solve();
 			if(milp.getStatus().equals(IloCplex.Status.Optimal)) {
-//				System.err.println("defender");
-//				System.err.println("objective=" + milp.getObjValue());
+				
 			} else if(milp.getStatus().equals(IloCplex.Status.Feasible)) {
 				throw new IloException("solution is feasible, not optimal");
 			} else if(milp.getStatus().equals(IloCplex.Status.Infeasible)) {
@@ -454,9 +269,6 @@ public class ACMRES extends ACMRE {
 			}
 			
 			xvals = milp.getValues(x);
-//			for(int i = 0; i < X; i++) {
-//				System.err.println("p(" + attackerPureStrategiesArray[i] + ")=" + xvals[i]);
-//			}
 		} catch (IloException e) {
 			e.printStackTrace();
 		} finally {
