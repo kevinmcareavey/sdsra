@@ -6,6 +6,7 @@ import java.util.Map;
 import sdsra.pairs.PlayerPair;
 import sdsra.pairs.TargetPair;
 import sdsra.pairs.player_pairs.PureStrategyProfile;
+import utilities.Utilities;
 import data_structures.AdvancedSet;
 import data_structures.ProbabilityDistribution;
 
@@ -80,7 +81,7 @@ public class SecurityGame {
 		String delimOuter = "";
 		for(Map.Entry<AttackerType, Map<Target, TargetPair<PlayerPair<Payoff>>>> entryOuter : payoffs.entrySet()) {
 			AttackerType attackerType = entryOuter.getKey();
-			output += delimOuter + "P(" + attackerType + ")=" + game.getAttackerTypeProbabilities().getProbability(attackerType) + "\n";
+			output += delimOuter + "P(" + attackerType + ")=" + Utilities.format(game.getAttackerTypeProbabilities().getProbability(attackerType)) + "\n";
 			String delimInner = "";
 			for(Map.Entry<Target, TargetPair<PlayerPair<Payoff>>> entryInner : entryOuter.getValue().entrySet()) {
 				output += delimInner + entryInner.getKey() + ":=" + entryInner.getValue();

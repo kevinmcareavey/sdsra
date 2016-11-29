@@ -159,7 +159,7 @@ public class Scenario {
 			attackerThresholds.put(armedRobber, armedRobberThreshold);
 			attackerThresholds.put(pickpocket, pickpocketThreshold);
 			
-			ACMRES acrmes = new ACMRES(securityGame);
+			ACMRES acrmes = new ACMRES(securityGame.getBayesianStackelbergGame());
 			acrmes.solve(defenderThreshold, attackerThresholds);
 			
 			PureStrategy defendersOptimalStrategy = acrmes.getDefenderOptimalPureStrategy();

@@ -1,5 +1,7 @@
 package evaluation;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import sdsra.AttackerType;
@@ -93,6 +95,14 @@ public class Randomizer {
 		}
 		
 		return securityGame;
+	}
+	
+	public static Map<AttackerType, Double> randomSigmas(AdvancedSet<AttackerType> attackerTypes) {
+		Map<AttackerType, Double> attackerSigmas = new HashMap<AttackerType, Double>();
+		for(AttackerType attackerType : attackerTypes) {
+			attackerSigmas.put(attackerType, randomDouble(0, 1));
+		}
+		return attackerSigmas;
 	}
 	
 }

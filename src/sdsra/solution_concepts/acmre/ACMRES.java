@@ -13,7 +13,6 @@ import sdsra.BayesianStackelbergGame;
 import sdsra.MixedStrategy;
 import sdsra.Payoff;
 import sdsra.PureStrategy;
-import sdsra.SecurityGame;
 import sdsra.pairs.PlayerPair;
 import sdsra.pairs.player_pairs.PureStrategyProfile;
 import sdsra.solution_concepts.ACMRE;
@@ -38,10 +37,6 @@ public class ACMRES extends ACMRE {
 	// Outputs.
 	private double[][] q;
 	private double[] x;
-	
-	public ACMRES(SecurityGame securityGame) {
-		this(securityGame.getBayesianStackelbergGame());
-	}
 	
 	public ACMRES(BayesianStackelbergGame bayesianStackelbergGame) {
 		L = bayesianStackelbergGame.getAttackerTypeProbabilities().size();
